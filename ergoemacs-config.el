@@ -673,7 +673,7 @@ Also returns nil if pid is nil."
     )
 
 (ergoemacs-package extend-dnd
-    :esure t
+    :ensure t
     (extend-dnd-activate))
 
 (ergoemacs-autoload ace-window

@@ -465,7 +465,7 @@ Also returns nil if pid is nil."
 
 (ergoemacs-package org-protocol)
 (ergoemacs-package org-outlook
-    :ensure t)
+    :ensure (eq system-type 'windows-nt))
 
 (ergoemacs-package org-indent
     (add-hook 'org-mode-hook #'org-indent-mode))

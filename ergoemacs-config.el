@@ -487,15 +487,15 @@ Also returns nil if pid is nil."
         org-default-notes-file "~/org/refile.org"
         org-capture-templates `(("t" "todo" entry (file "~/org/refile.org")
                                  "* TODO %?\n%U\n%a\n  %i" :clock-in t :clock-resume t)
-                                ("d" "Daily Review" plain (file+datetree "~/org/daily.org")
-                                 ,(format "%%[%s/five-minute.org]"
-                                          (expand-file-name "etc"
-                                                            emacsmate-dir)) :clock-in t :clock-resume t)
-                                ("k" "Weekly Review" plain (file+datetree "~/org/weekly.org")
-                                 ,(format "%%[%s/gtd-weekly.org]"
-                                          (expand-file-name "etc"
-                                                            emacsmate-dir))
-                                 :clock-in t :clock-resume t)
+                                ;; ("d" "Daily Review" plain (file+datetree "~/org/daily.org")
+                                ;;  ,(format "%%[%s/five-minute.org]"
+                                ;;           (expand-file-name "etc"
+                                ;;                             emacsmate-dir)) :clock-in t :clock-resume t)
+                                ;; ("k" "Weekly Review" plain (file+datetree "~/org/weekly.org")
+                                ;;  ,(format "%%[%s/gtd-weekly.org]"
+                                ;;           (expand-file-name "etc"
+                                ;;                             emacsmate-dir))
+                                ;;  :clock-in t :clock-resume t)
                                 ("n" "note" entry (file "~/org/refile.org")
                                  "* %? :NOTE:\n%U\n%a\n  %i" :clock-in t :clock-resume t)
                                 ("j" "Journal" entry (file+datetree "~/org/diary.org")
@@ -601,10 +601,11 @@ Also returns nil if pid is nil."
            ("\\.[Bb][Mm][Dd]\\'"         . ess-bugs-mode)
            ("\\.[Jj][Aa][Gg]\\'"         . ess-jags-mode)
            ("\\.[Jj][Oo][Gg]\\'"         . ess-jags-mode)
-           ("\\.[Jj][Mm][Dd]\\'"         . ess-jags-mode))
+           ("\\.[Jj][Mm][Dd]\\'"         . ess-jags-mode)
+	   ("\\.[Rr][mM][Dd]\\'"         . poly-markdown+r-mode))
     :interpreter (("Rscript" . r-mode)
                   ("r" . r-mode))
-    :ensure ess
+    :ensure (ess polymode markdown-mode electric-operator)
     (defun ergoemacs-turn-on-ess-eldoc ()
       (require 'ess-eldoc))
     (add-hook 'ess-mode-hook 'ergoemacs-turn-on-ess-eldoc)
@@ -635,8 +636,43 @@ Also returns nil if pid is nil."
           comint-scroll-to-bottom-on-input t
           comint-scroll-to-bottom-on-output t
           comint-move-point-for-output t)
-    (when (file-exists-p "c:/MS/R/3.0")
-      (setenv "R_LIBS" "c:/MS/R/3.0")))
+    (setenv "PATH"
+	    (let (full)			;(let (full)
+              ;; (push (getenv "PATH") full)
+              (dolist (f '("C:/RTOOLS/gcc-4.6.3/bin"  
+                           "C:/RTOOLS/bin"
+                           "c:/Progra~1/Putty"
+                           "c:/R/R-3.2.3/bin"))
+                (when (file-exists-p f)
+                  (push f full)))
+	      
+              (concat
+	       (mapconcat (lambda (x) x) full ";")
+	       ";" (getenv "PATH"))))
+    (setenv "R_LIBS"
+	    (let (full)
+	      (dolist (f '("c:/R/R-3.2.3/library" "c:/MS/R/3.0" "c:/SVN/R/Rlib"
+			   "c:/SVN/R/PMXStan"
+			   "c:/SVN/Wenping/Rlib"))
+		(when (file-exists-p f)
+		  (push f full)))
+	      (mapconcat (lambda (x) x) full ";")))
+    (require 'poly-R)
+    (require 'poly-markdown)
+    ;; (when (and (getenv "ProgramFiles")
+    ;; 	       (file-exists-p (format "%s/LLVM/bin" (getenv "ProgramFiles")))
+    ;; 	       (file-exists-p "c:/mingw32/bin"))
+    ;;   (setenv "PATH" (format "%s/LLVM/bin;c:/mingw32/bin;%s" (getenv "ProgramFiles") (getenv "PATH"))))
+    ;; Use R core team's recommendations for ESS.
+    ;; See http://stackoverflow.com/questions/7502540/make-emacs-ess-follow-r-style-guide
+    (add-hook 'ess-mode-hook
+	      (lambda()
+		(ess-set-style 'C++ 'quiet)
+		(add-hook 'local-write-file-hooks
+                          (lambda ()
+                            (ess-nuke-trailing-whitespace)))
+		(electric-operator-mode)))
+    (setq ess-nuke-trailing-whitespace-p t))
 
 (ergoemacs-package ess-smart-underscore
     :ensure t)
@@ -743,6 +779,7 @@ Also returns nil if pid is nil."
 	    (throw 'not-found nil)))
 	dir))
     (add-to-list 'projectile-project-root-files-function 'projectile-project-template-root))
+
 
 ;; (ergoemacs-package c-spc-set-mark
 ;;     (global-set-key (kbd "C-SPC") 'set-mark-command))

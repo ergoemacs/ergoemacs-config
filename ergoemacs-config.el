@@ -227,7 +227,7 @@
     (dolist (hook '(prog-mode-hook))
       (add-hook 'fci-mode hook)))
 
-(ergoemacs-package guide-key
+(ergoemacs-autoload guide-key
     :ensure t
     :defer 2
     (guide-key-mode 1)
@@ -487,10 +487,9 @@ Also returns nil if pid is nil."
         org-default-notes-file "~/org/refile.org"
         org-capture-templates `(("t" "todo" entry (file "~/org/refile.org")
                                  "* TODO %?\n%U\n%a\n  %i" :clock-in t :clock-resume t)
-                                ;; ("d" "Daily Review" plain (file+datetree "~/org/daily.org")
-                                ;;  ,(format "%%[%s/five-minute.org]"
-                                ;;           (expand-file-name "etc"
-                                ;;                             emacsmate-dir)) :clock-in t :clock-resume t)
+                                ("d" "Daily Review" plain (file+datetree "~/org/daily.org")
+                                 ,(format "%%[%s/five-minute.org]"
+                                          (expand-file-name "etc" "~EmacsMate/")) :clock-in t :clock-resume t)
                                 ;; ("k" "Weekly Review" plain (file+datetree "~/org/weekly.org")
                                 ;;  ,(format "%%[%s/gtd-weekly.org]"
                                 ;;           (expand-file-name "etc"
@@ -531,8 +530,8 @@ Also returns nil if pid is nil."
         org-cycle-separator-lines 0
         org-blank-before-new-entry (quote ((heading) (plain-list-item)))
         org-src-window-setup 'current-window)
-  (add-hook 'org-after-refile-insert-hook #'save-buffer)
-  (add-hook 'org-capture-after-finalize-hook #'save-buffer)
+  ;; (add-hook 'org-after-refile-insert-hook #'save-buffer)
+  ;; (add-hook 'org-capture-after-finalize-hook #'save-buffer)
   ;;
   ;; Resume clocking task when emacs is restarted
   (org-clock-persistence-insinuate)
@@ -639,24 +638,26 @@ Also returns nil if pid is nil."
     (setenv "PATH"
 	    (let (full)			;(let (full)
               ;; (push (getenv "PATH") full)
-              (dolist (f '("C:/RTOOLS/gcc-4.6.3/bin"  
-                           "C:/RTOOLS/bin"
+              (dolist (f '(;; "C:/RTOOLS/gcc-4.6.3/bin"  
+                           ;; "C:/RTOOLS/bin"
                            "c:/Progra~1/Putty"
-                           "c:/R/R-3.2.3/bin"))
+                           ;; "c:/R/R-3.2.3/bin"
+			   ))
                 (when (file-exists-p f)
                   (push f full)))
 	      
               (concat
 	       (mapconcat (lambda (x) x) full ";")
 	       ";" (getenv "PATH"))))
-    (setenv "R_LIBS"
-	    (let (full)
-	      (dolist (f '("c:/R/R-3.2.3/library" "c:/MS/R/3.0" "c:/SVN/R/Rlib"
-			   "c:/SVN/R/PMXStan"
-			   "c:/SVN/Wenping/Rlib"))
-		(when (file-exists-p f)
-		  (push f full)))
-	      (mapconcat (lambda (x) x) full ";")))
+    ;; (setenv "R_LIBS"
+    ;; 	    (let (full)
+    ;; 	      (dolist (f '("c:/R/R-3.2.3/library" "c:/MS/R/3.0" "c:/SVN/R/Rlib"
+    ;; 			   "c:/SVN/R/PMXStan"
+    ;; 			   "c:/SVN/Wenping/Rlib"))
+    ;; 		(when (file-exists-p f)
+    ;; 		  (push f full)))
+    ;; 	      (mapconcat (lambda (x) x) full ";")))
+    (setenv "R_LIBS" "c:/Rlibs-RxODE")
     (require 'poly-R)
     (require 'poly-markdown)
     ;; (when (and (getenv "ProgramFiles")

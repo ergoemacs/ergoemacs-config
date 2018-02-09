@@ -264,7 +264,7 @@
 (ergoemacs-package volatile-highlights
     :ensure t
     :defer 3
-    (volatile-highilght-mode))
+    (volatile-highlights-mode))
 
 (ergoemacs-autoload desktop-save
     (desktop-save-mode 1)
@@ -315,7 +315,7 @@ Also returns nil if pid is nil."
 
 (ergoemacs-package tab-setup
     (setq-default indent-tabs-mode nil)
-  (setq-default tab-witdh 4)
+  (setq-default tab-width 4)
   (setq-default tab-always-indent 'complete))
 
 (ergoemacs-package stop-cursor-in-minibuffer-prompt
@@ -548,17 +548,17 @@ Also returns nil if pid is nil."
     :ensure t
     (load-theme 'solarized-light))
 
-(ergoemacs-package smart-mode-line
-    :ensure nil
-    :defer 2
-    ;; (setq sml/no-confirm-load-theme t)
-    ;; (sml/setup)
-    ;; (ergoemacs-mode-line-format)
-    ;; 	      ;; 
-    ;; 	      ;; mode-line-misc-info
-    ;; 	      ;; mode-line-end-spaces
-    ;; 	      )))
-    )
+;; (ergoemacs-package smart-mode-line
+;;     :ensure nil
+;;     :defer 2
+;;     ;; (setq sml/no-confirm-load-theme t)
+;;     ;; (sml/setup)
+;;     ;; (ergoemacs-mode-line-format)
+;;     ;; 	      ;; 
+;;     ;; 	      ;; mode-line-misc-info
+;;     ;; 	      ;; mode-line-end-spaces
+;;     ;; 	      )))
+;;     )
 
 
 ;;; ergoemacs-options
@@ -641,7 +641,6 @@ Also returns nil if pid is nil."
               (dolist (f '(;; "C:/RTOOLS/gcc-4.6.3/bin"  
                            ;; "C:/RTOOLS/bin"
                            "c:/Progra~1/Putty"
-                           ;; "c:/R/R-3.2.3/bin"
 			   ))
                 (when (file-exists-p f)
                   (push f full)))

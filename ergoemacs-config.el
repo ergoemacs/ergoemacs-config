@@ -164,7 +164,7 @@
     (helm-autoresize-mode t))
 
 (ergoemacs-package ido
-    :ensure (ido-ubiquitous ido-vertical-mode smex flx-ido)
+    :ensure (ido-completing-read+ ido-vertical-mode smex flx-ido)
     ;; Remove extensions from ido completion
     (dolist (ext '("elc" "exe" "com" "org_archive" "png" "gif" "csv" "jpg" "jpeg"))
       (push ext completion-ignored-extensions))
@@ -189,7 +189,7 @@
           gc-cons-threshold 20000000)
     (ido-mode 1)
     (ido-everywhere 1)
-    (require 'ido-ubiquitous)
+    (require 'ido-completing-read+)
     (ido-ubiquitous-mode 1)
     (smex-initialize)
     (ido-vertical-mode 1)

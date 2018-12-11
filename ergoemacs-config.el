@@ -387,13 +387,13 @@ Also returns nil if pid is nil."
     (keyfreq-mode 1)
     (keyfreq-autosave-mode 1))
 
-(ergoemacs-package info+
-    :ensure t
-    :defer 1)
+;; (ergoemacs-package info+
+;;     :ensure t
+;;     :defer 1)
 
-(ergoemacs-package dired+
-    :ensure t
-    :defer 1)
+;; (ergoemacs-package dired+
+;;     :ensure t
+;;     :defer 1)
 
 (ergoemacs-package auto-compression
     :defer 1
@@ -446,22 +446,6 @@ Also returns nil if pid is nil."
 
 ;;; Org mode
 
-(ergoemacs-package org-babel
-    ;; Setup org-babel
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((emacs-lisp . t)
-       (sh . t)
-       (R . t)
-       (plantuml . t)
-       (perl . t)
-       (ruby . t)
-       (python . t)
-       (js . t)
-       (haskell . t)
-       (clojure . t)
-       (ditaa . t)))
-  (setq org-confirm-babel-evaluate nil))
 
 (ergoemacs-package org-protocol)
 (ergoemacs-package org-outlook

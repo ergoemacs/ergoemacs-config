@@ -648,7 +648,7 @@ Also returns nil if pid is nil."
     ;; See http://stackoverflow.com/questions/7502540/make-emacs-ess-follow-r-style-guide
     (add-hook 'ess-mode-hook
 	      (lambda()
-		(ess-set-style 'Rstudio 'quiet)
+		(ess-set-style 'RStudio 'quiet)
 		(add-hook 'local-write-file-hooks
                           (lambda ()
                             (ess-nuke-trailing-whitespace)))

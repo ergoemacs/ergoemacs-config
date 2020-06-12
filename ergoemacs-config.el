@@ -121,36 +121,36 @@
     (global-aggressive-indent-mode 1))
 
 
-(ergoemacs-package smartparens
-    :ensure t
-    :defer t
-    (dolist (hook '(prog-mode-hook))
-      (add-hook hook 'smartparens-mode))
+;; (ergoemacs-package smartparens
+;;     :ensure t
+;;     :defer t
+;;     (dolist (hook '(prog-mode-hook))
+;;       (add-hook hook 'smartparens-mode))
 
-    ;; enable smartparens-mode in `eval-expression'
-    (defun ergoemacs-conditionally-enable-smartparens-mode ()
-      "Enable `smartparens-mode' during `eval-expression'."
-      (if (eq this-command 'eval-expression)
-          (smartparens-mode)))
-    (add-hook 'minibuffer-setup-hook 'ergoemacs-conditionally-enable-smartparens-mode)
+;;     ;; enable smartparens-mode in `eval-expression'
+;;     (defun ergoemacs-conditionally-enable-smartparens-mode ()
+;;       "Enable `smartparens-mode' during `eval-expression'."
+;;       (if (eq this-command 'eval-expression)
+;;           (smartparens-mode)))
+;;     (add-hook 'minibuffer-setup-hook 'ergoemacs-conditionally-enable-smartparens-mode)
 
-    (require 'smartparens-config)
-    (setq sp-show-pair-delay 0
-          sp-show-pair-from-inside t ; fix paren highlighting in normal mode
-          sp-cancel-autoskip-on-backward-movement nil)
-    (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
+;;     (require 'smartparens-config)
+;;     (setq sp-show-pair-delay 0
+;;           sp-show-pair-from-inside t ; fix paren highlighting in normal mode
+;;           sp-cancel-autoskip-on-backward-movement nil)
+;;     (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
 
-    (defun emacsmate-smartparens-emacs-mode-hook ()
-      "Change `sp-navigate-close-if-unbalanced' to be non-nil in emacs-buffers"
-      (set (make-local-variable 'sp-navigate-close-if-unbalanced) t))
+;;     (defun emacsmate-smartparens-emacs-mode-hook ()
+;;       "Change `sp-navigate-close-if-unbalanced' to be non-nil in emacs-buffers"
+;;       (set (make-local-variable 'sp-navigate-close-if-unbalanced) t))
     
-    (add-hook 'emacs-lisp-mode-hook
-              'emacsmate-smartparens-emacs-mode-hook)
-    (show-smartparens-global-mode +1)
+;;     (add-hook 'emacs-lisp-mode-hook
+;;               'emacsmate-smartparens-emacs-mode-hook)
+;;     (show-smartparens-global-mode +1)
     
-    ;; don't create a pair with single quote in minibuffer
-    (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
-    (smartparens-global-mode 1))
+;;     ;; don't create a pair with single quote in minibuffer
+;;     (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+;;     (smartparens-global-mode 1))
 
 (ergoemacs-package evil-numbers
     :ensure t
@@ -164,7 +164,7 @@
     (helm-autoresize-mode t))
 
 (ergoemacs-package ido
-    :ensure (ido-ubiquitous ido-vertical-mode smex flx-ido)
+    :ensure (ido-completing-read+ ido-vertical-mode smex flx-ido)
     ;; Remove extensions from ido completion
     (dolist (ext '("elc" "exe" "com" "org_archive" "png" "gif" "csv" "jpg" "jpeg"))
       (push ext completion-ignored-extensions))
@@ -189,28 +189,28 @@
           gc-cons-threshold 20000000)
     (ido-mode 1)
     (ido-everywhere 1)
-    (require 'ido-ubiquitous)
+    ;; (require 'ido-ubiquitous)
     (ido-ubiquitous-mode 1)
     (smex-initialize)
     (ido-vertical-mode 1)
     (flx-ido-mode 1))
 
-(ergoemacs-package auto-highlight-symbol
-    :ensure t
-    :defer 3
-    (dolist (hook '(prog-mode-hook markdown-mode-hook))
-      (add-hook 'auto-highlight-symbol-mode hook))
-    (setq ahs-case-fold-search nil
-          ahs-default-range 'ahs-range-whole-buffer
-          ahs-inhibit-face-list nil)
-    ;; FIXME: Think about keys for `ahs-forward', `ahs-backward' `ahs-back-to-start'
-    )
+;; (ergoemacs-package auto-highlight-symbol
+;;     :ensure t
+;;     :defer 3
+;;     (dolist (hook '(prog-mode-hook markdown-mode-hook))
+;;       (add-hook 'auto-highlight-symbol-mode hook))
+;;     (setq ahs-case-fold-search nil
+;;           ahs-default-range 'ahs-range-whole-buffer
+;;           ahs-inhibit-face-list nil)
+;;     ;; FIXME: Think about keys for `ahs-forward', `ahs-backward' `ahs-back-to-start'
+;;     )
 
-(ergoemacs-package anzu
-    :ensure t
-    :defer 1
-    (global-anzu-mode 1)
-    (global-set-key [remap query-replace] 'anzu-query-replace))
+;; (ergoemacs-package anzu
+;;     :ensure t
+;;     :defer 1
+;;     (global-anzu-mode 1)
+;;     (global-set-key [remap query-replace] 'anzu-query-replace))
 
 (ergoemacs-autoload visual-regexp
     :ensure t
@@ -446,26 +446,26 @@ Also returns nil if pid is nil."
 
 ;;; Org mode
 
-(ergoemacs-package org-babel
-    ;; Setup org-babel
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((emacs-lisp . t)
-       (sh . t)
-       (R . t)
-       (plantuml . t)
-       (perl . t)
-       (ruby . t)
-       (python . t)
-       (js . t)
-       (haskell . t)
-       (clojure . t)
-       (ditaa . t)))
-  (setq org-confirm-babel-evaluate nil))
+;; (ergoemacs-package org-babel
+;;     ;; Setup org-babel
+;;     (org-babel-do-load-languages
+;;      'org-babel-load-languages
+;;      '((emacs-lisp . t)
+;;        (sh . t)
+;;        (R . t)
+;;        (plantuml . t)
+;;        (perl . t)
+;;        (ruby . t)
+;;        (python . t)
+;;        (js . t)
+;;        (haskell . t)
+;;        (clojure . t)
+;;        (ditaa . t)))
+;;   (setq org-confirm-babel-evaluate nil))
 
-(ergoemacs-package org-protocol)
-(ergoemacs-package org-outlook
-    :ensure (eq system-type 'windows-nt))
+;; (ergoemacs-package org-protocol)
+;; (ergoemacs-package org-outlook
+;;     :ensure (eq system-type 'windows-nt))
 
 (ergoemacs-package org-indent
     (add-hook 'org-mode-hook #'org-indent-mode))
@@ -601,13 +601,14 @@ Also returns nil if pid is nil."
            ("\\.[Jj][Aa][Gg]\\'"         . ess-jags-mode)
            ("\\.[Jj][Oo][Gg]\\'"         . ess-jags-mode)
            ("\\.[Jj][Mm][Dd]\\'"         . ess-jags-mode)
-	   ("\\.[Rr][mM][Dd]\\'"         . poly-markdown+r-mode))
+	   ;; ("\\.[Rr][mM][Dd]\\'"         . poly-markdown+r-mode)
+	   )
     :interpreter (("Rscript" . r-mode)
                   ("r" . r-mode))
     :ensure (ess polymode markdown-mode electric-operator)
-    (defun ergoemacs-turn-on-ess-eldoc ()
-      (require 'ess-eldoc))
-    (add-hook 'ess-mode-hook 'ergoemacs-turn-on-ess-eldoc)
+    ;; (defun ergoemacs-turn-on-ess-eldoc ()
+    ;;   (require 'ess-eldoc))
+    ;; (add-hook 'ess-mode-hook 'ergoemacs-turn-on-ess-eldoc)
     (add-hook 'ess-mmode-hook 'flyspell-mode)
     (when (file-exists-p "~src/Rstartup/Rstartup.R")
       (setenv "R_PROFILE_USER" (expand-file-name "~src/Rstartup/Rstartup.R")))
@@ -640,7 +641,8 @@ Also returns nil if pid is nil."
               ;; (push (getenv "PATH") full)
               (dolist (f '(;; "C:/RTOOLS/gcc-4.6.3/bin"  
                            ;; "C:/RTOOLS/bin"
-                           "c:/Progra~1/Putty"
+                           ;; "c:/Progra~1/Putty"
+			   "C:/ProgramData/Microsoft/AppV/Client/Integration/1CA54D47-052B-48ED-B054-75DAC0BF58BF/Root"
 			   ))
                 (when (file-exists-p f)
                   (push f full)))
@@ -657,8 +659,8 @@ Also returns nil if pid is nil."
     ;; 		  (push f full)))
     ;; 	      (mapconcat (lambda (x) x) full ";")))
     (setenv "R_LIBS" "c:/Rlibs-RxODE")
-    (require 'poly-R)
-    (require 'poly-markdown)
+    ;; (require 'poly-R)
+    ;; (require 'poly-markdown)
     ;; (when (and (getenv "ProgramFiles")
     ;; 	       (file-exists-p (format "%s/LLVM/bin" (getenv "ProgramFiles")))
     ;; 	       (file-exists-p "c:/mingw32/bin"))
@@ -667,7 +669,7 @@ Also returns nil if pid is nil."
     ;; See http://stackoverflow.com/questions/7502540/make-emacs-ess-follow-r-style-guide
     (add-hook 'ess-mode-hook
 	      (lambda()
-		(ess-set-style 'C++ 'quiet)
+		(ess-set-style 'Rstudio 'quiet)
 		(add-hook 'local-write-file-hooks
                           (lambda ()
                             (ess-nuke-trailing-whitespace)))
@@ -708,9 +710,9 @@ Also returns nil if pid is nil."
     ;;   (add-hook 'org-mode-hook #'yas-org-setup))
     )
 
-(ergoemacs-package extend-dnd
-    :ensure t
-    (extend-dnd-activate))
+;; (ergoemacs-package extend-dnd
+;;     :ensure t
+;;     (extend-dnd-activate))
 
 (ergoemacs-autoload ace-window
     "Ace Window"

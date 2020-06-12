@@ -189,7 +189,7 @@
           gc-cons-threshold 20000000)
     (ido-mode 1)
     (ido-everywhere 1)
-    ;; (require 'ido-ubiquitous)
+    (require 'ido-completing-read+)
     (ido-ubiquitous-mode 1)
     (smex-initialize)
     (ido-vertical-mode 1)
@@ -387,13 +387,13 @@ Also returns nil if pid is nil."
     (keyfreq-mode 1)
     (keyfreq-autosave-mode 1))
 
-(ergoemacs-package info+
-    :ensure t
-    :defer 1)
+;; (ergoemacs-package info+
+;;     :ensure t
+;;     :defer 1)
 
-(ergoemacs-package dired+
-    :ensure t
-    :defer 1)
+;; (ergoemacs-package dired+
+;;     :ensure t
+;;     :defer 1)
 
 (ergoemacs-package auto-compression
     :defer 1
@@ -445,27 +445,6 @@ Also returns nil if pid is nil."
 ;;   (add-to-list 'interpreter-mode-alist '("miniperl" . cperl-mode)))
 
 ;;; Org mode
-
-;; (ergoemacs-package org-babel
-;;     ;; Setup org-babel
-;;     (org-babel-do-load-languages
-;;      'org-babel-load-languages
-;;      '((emacs-lisp . t)
-;;        (sh . t)
-;;        (R . t)
-;;        (plantuml . t)
-;;        (perl . t)
-;;        (ruby . t)
-;;        (python . t)
-;;        (js . t)
-;;        (haskell . t)
-;;        (clojure . t)
-;;        (ditaa . t)))
-;;   (setq org-confirm-babel-evaluate nil))
-
-;; (ergoemacs-package org-protocol)
-;; (ergoemacs-package org-outlook
-;;     :ensure (eq system-type 'windows-nt))
 
 (ergoemacs-package org-indent
     (add-hook 'org-mode-hook #'org-indent-mode))
